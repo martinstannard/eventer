@@ -5,7 +5,7 @@ defmodule Ssa.Router do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_flash
-    plug :protect_from_forgery
+    #plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
 
@@ -18,6 +18,11 @@ defmodule Ssa.Router do
 
     get "/", PageController, :index
   end
+
+  scope "/api", Ssa do
+    resources "/v1/events", V1.EventController
+  end
+
 
   # Other scopes may use custom stacks.
   # scope "/api", Ssa do
