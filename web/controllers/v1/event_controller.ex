@@ -5,6 +5,16 @@ defmodule Ssa.V1.EventController do
 
   #plug :scrub_params, "event" when action in [:create, :update]
 
+  def index(conn, %{"from_date" => from_date, "to_date" => to_date}) do
+    query = from e in Event,
+          #where: e.inserted_at < ^Ecto.DateTime.from_date(from_date),
+          where: e.inserted_at > ^Ecto.DateTime.from_date(elem(Ecto.Date.cast(from_date),1)),
+          select: e
+    
+    events = Repo.all(query)
+    render(conn, "index.json", events: events)
+  end
+
   def index(conn, _params) do
     events = Repo.all(Event)
     render(conn, "index.json", events: events)

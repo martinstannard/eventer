@@ -19,13 +19,14 @@ defmodule Ssa.Router do
     get "/", PageController, :index
   end
 
-  scope "/api", Ssa do
-    resources "/v1/events", V1.EventController
-  end
+  #scope "/api", Ssa do
+    #resources "/v1/events", V1.EventController
+  #end
 
 
   # Other scopes may use custom stacks.
-  # scope "/api", Ssa do
-  #   pipe_through :api
-  # end
+  scope "/api", Ssa do
+    pipe_through :api
+    resources "/v1/events", V1.EventController
+  end
 end

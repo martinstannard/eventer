@@ -1,5 +1,6 @@
 defmodule Ssa.V1.Event do
   use Ssa.Web, :model
+  import Ecto.Query
 
   schema "events" do
     field :event_type, :string
@@ -25,4 +26,27 @@ defmodule Ssa.V1.Event do
     model
     |> cast(params, @required_fields, @optional_fields)
   end
+
+  def before(query, date) do
+    daate = Ecto.DateTime.from_date(elem(Ecto.Date.cast(date),1))
+    from e in query,
+    where: e.inserted_at <= ^daate
+  end
+  
+  def after(query, date) do
+    daate = Ecto.DateTime.from_date(elem(Ecto.Date.cast(date),1))
+    from e in query,
+    where: e.inserted_at >= ^daate
+  end
+  
+  def product(query, product) do
+    from e in query,
+    where: e.product == ^product
+  end
+
+  def class(query, class_id) do
+    from e in query,
+    where: e.class_id == ^class_id
+  end
+
 end
