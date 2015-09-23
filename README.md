@@ -1,5 +1,7 @@
 # Ssa
 
+Requires Postgresql 9.4 or greater for jsonb support.
+
 To start your Phoenix app:
 
   1. Install dependencies with `mix deps.get`
